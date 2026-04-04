@@ -13,10 +13,9 @@ export class AuthService {
     private jwtService: JwtService
   ) { }
 
-  async signUp(registerdto: RegisterDto) {
+  async createUser(registerdto: RegisterDto) {
     try {
       const { email, password, role } = registerdto
-      console.log(`hello ${email}`)
 
       const hashedPassword = await bcrypt.hash(password, 10)
       console.log(hashedPassword)
@@ -28,8 +27,10 @@ export class AuthService {
         }
       })
 
-      console.log(user)
-      return user
+      return {
+        message: 'user created successfully',
+        user
+      }
     } catch (error) {
       throw error
     }

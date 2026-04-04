@@ -4,11 +4,11 @@ import { Role } from "src/common/enums/role.enum";
 
 export class RegisterDto {
     @IsEmail()
-    email: string;
+    email!: string;
 
     @IsString()
-    password: string
+    password!: string
 
     @IsEnum(Role)
-    role: Role
+    role!: Role
 }
