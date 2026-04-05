@@ -48,7 +48,7 @@ Prerequisites
 
 Clone the repository
 
-git clone https://github.com/your-username/finance-backend.git
+git clone https://github.com/SaiPrabhasKola/finance-backend.git
 cd finance-backend
 
 Configure environment variables
@@ -86,7 +86,7 @@ API Documentation
 
 Swagger UI is available at:
 
-http://<your-server-ip>:3000/api
+http://54.252.149.171/:3000/api
 
 Deployment
 
@@ -120,7 +120,3 @@ Future Improvements
 - Implement refresh tokens and session management
 - Add rate limiting and request logging
 - Introduce monitoring and alerting
-
-License
-
-This project is for educational and demonstration purposes.
