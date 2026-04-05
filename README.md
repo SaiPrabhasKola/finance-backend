@@ -49,6 +49,7 @@ Prerequisites
 Clone the repository
 
 git clone https://github.com/SaiPrabhasKola/finance-backend.git
+
 cd finance-backend
 
 Configure environment variables
