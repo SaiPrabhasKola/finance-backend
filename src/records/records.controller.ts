@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, UseGuards } from '@nestjs/common';
 import { RecordsService } from './records.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guards';
@@ -22,17 +22,56 @@ export class RecordsController {
 
     @UseGuards(JwtAuthGuard)
     @Get('')
-    getRecords(
-    ) {
-        return this.recordService.getRecords()
+    getRecords(@Query() query: any) {
+        return this.recordService.getRecords(query)
     }
 
     @UseGuards(JwtAuthGuard, RolesGuard)
     @Roles(Role.ADMIN)
-    @Put()
+    @Patch(':id')
     update(
-        @Body() dto: UpdateRecordDTO
-    ) { }
+        @Body() dto: UpdateRecordDTO, @Param('id') id: string
+    ) {
+        return this.recordService.patchRecords(id, dto)
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.ADMIN)
+    @Delete(':id')
+    delete(@Param(':id') id: string) {
+        return this.recordService.deleteRecord(id)
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles(Role.ADMIN, Role.ANALYST)
+    @Get('summary')
+    getSummary() {
+        return this.recordService.getSummary()
+    }
+
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('analyst', 'admin')
+    @Get('category')
+    category() {
+        return this.recordService.categoryBreakdown();
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('analyst', 'admin')
+    @Get('recent')
+    recent() {
+        return this.recordService.recentActivity();
+    }
+
+    @UseGuards(JwtAuthGuard, RolesGuard)
+    @Roles('analyst', 'admin')
+    @Get('monthly')
+    monthly() {
+        return this.recordService.monthlyTrends();
+    }
+
+
 
 
 
