@@ -12,10 +12,10 @@ import { JwtStrategy } from './auth.strategy';
     PrismaModule,
     JwtModule.register({
       privateKey: fs.readFileSync(
-        path.join(process.cwd(), 'src', 'auth', 'keys', 'private.key'),
+        path.join(process.cwd(), 'keys', 'private.key'),
       ),
       publicKey: fs.readFileSync(
-        path.join(process.cwd(), 'src', 'auth', 'keys', 'public.key'),
+        path.join(process.cwd(), 'keys', 'public.key'),
       ),
       signOptions: {
         algorithm: 'RS256',

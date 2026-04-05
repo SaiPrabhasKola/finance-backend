@@ -1,10 +1,33 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as dotenv from 'dotenv'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  dotenv.config()
+
+  const config = new DocumentBuilder()
+    .setTitle('Finance API')
+    .setDescription('Finance backend APIs')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config, {
+    ignoreGlobalPrefix: true,
+  });
+
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none',
+      filter: true,
+      showRequestDuration: true,
+    },
+    customCss: '.swagger-ui .topbar { display: none }', // Optional: hide topbar
+    customSiteTitle: 'Finance API Documentation',
+  });
+
   await app.listen(process.env.PORT ?? 3000);
+  console.log(`Server started`);
 }
 bootstrap();
