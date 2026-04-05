@@ -3,3 +3,8 @@ export enum Role {
     ANALYST = 'analyst',
     ADMIN = 'admin'
 }
+
+export enum TransactionType {
+    INCOME = 'income',
+    EXPENSE = 'expense'
+}

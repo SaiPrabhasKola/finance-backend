@@ -2,7 +2,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req, Use
 import { RecordsService } from './records.service';
 import { JwtAuthGuard } from 'src/auth/auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guards';
-import { Role } from 'src/common/enums/role.enum';
+import { Role } from 'src/common/enums/common.enum';
 import { Roles } from 'src/common/decorators/roles.decorators';
 import { CreateRecordDto } from './dtos/create-record.dto';
 import { UpdateRecordDTO } from './dtos/update-record.dto';
