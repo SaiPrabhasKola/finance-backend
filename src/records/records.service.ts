@@ -1,7 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateRecordDto } from './dtos/create-record.dto';
 import { UpdateRecordDTO } from './dtos/update-record.dto';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
 
 @Injectable()
 export class RecordsService {
@@ -9,8 +10,6 @@ export class RecordsService {
 
     async createRecord(dto: CreateRecordDto, user: any) {
         try {
-            console.log(dto)
-            console.log(user)
             return await this.prisma.record.create({
                 data: {
                     amount: dto.amount,
@@ -23,62 +22,64 @@ export class RecordsService {
                 }
             })
         } catch (error) {
-            console.log(error)
             throw error
         }
 
     }
 
     async getRecords(query: any) {
-        try {
-            const {
-                type,
-                category,
-                search,
-                page = 1,
-                limit = 10,
-            } = query;
+        const {
+            type,
+            category,
+            search,
+            startDate,
+            endDate,
+            page = 1,
+            limit = 10,
+        } = query;
 
-            return this.prisma.record.findMany({
-                where: {
-                    type: type || undefined,
-                    category: category || undefined,
+        return this.prisma.record.findMany({
+            where: {
+                type: type || undefined,
+                category: category || undefined,
 
-                    ...(search && {
-                        OR: [
-                            {
-                                category: {
-                                    contains: search,
-                                    mode: 'insensitive',
-                                },
+                ...(startDate && endDate && {
+                    date: {
+                        gte: new Date(startDate),
+                        lte: new Date(endDate),
+                    }
+                }),
+
+                ...(search && {
+                    OR: [
+                        {
+                            category: {
+                                contains: search,
+                                mode: 'insensitive',
                             },
-                            {
-                                note: {
-                                    contains: search,
-                                    mode: 'insensitive',
-                                },
+                        },
+                        {
+                            note: {
+                                contains: search,
+                                mode: 'insensitive',
                             },
-                        ],
-                    }),
-                },
+                        },
+                    ],
+                }),
+            },
 
-                skip: (Number(page) - 1) * Number(limit),
-                take: Number(limit),
+            skip: (Number(page) - 1) * Number(limit),
+            take: Number(limit),
 
-                orderBy: {
-                    date: 'desc',
-                },
-            });
-
-        } catch (error) {
-            throw error
-        }
-
+            orderBy: {
+                date: 'desc',
+            },
+        });
     }
 
     async patchRecords(id: string, dto: UpdateRecordDTO) {
         try {
-            return this.prisma.record.update({
+            return await this.prisma.record.update({
                 where: { id },
                 data: {
                     ...dto,
@@ -86,7 +87,10 @@ export class RecordsService {
                 },
             });
         } catch (error) {
-
+            if (error instanceof PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') throw new NotFoundException('record not found')
+            }
+            throw error
         }
     }
 
@@ -97,6 +101,9 @@ export class RecordsService {
             });
 
         } catch (error) {
+            if (error instanceof PrismaClientKnownRequestError) {
+                if (error.code === 'P2025') throw new NotFoundException('record not found')
+            }
             throw error
         }
     }
