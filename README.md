@@ -1,98 +1,123 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+Finance Backend API
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A production-ready backend service for managing financial records, built with NestJS, Prisma, and PostgreSQL. The system includes authentication, role-based access control, filtering, and summary APIs, and is deployed using Docker on AWS EC2 with a managed PostgreSQL database.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Features
 
-## Description
+- User authentication with JWT (RSA-based)
+- Role-based access control (RBAC)
+- Financial records CRUD
+- Filtering by date, category, and type
+- Dashboard summary APIs (totals and trends)
+- Input validation and structured error handling
+- Swagger API documentation
+- Dockerized deployment
+- Managed PostgreSQL database (NeonDB)
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Tech Stack
 
-## Project setup
+- Backend Framework: NestJS
+- Language: TypeScript
+- Database: PostgreSQL (NeonDB)
+- ORM: Prisma
+- Authentication: JWT (RSA)
+- Containerization: Docker, Docker Compose
+- Deployment: AWS EC2
+- API Docs: Swagger
 
-```bash
-$ npm install
-```
+Project Structure
 
-## Compile and run the project
+src/
+auth/
+records/
+common/
+prisma/
+dist/
+prisma/
+docker-compose.yaml
+Dockerfile
+prisma.config.ts
 
-```bash
-# development
-$ npm run start
+Getting Started
 
-# watch mode
-$ npm run start:dev
+Prerequisites
 
-# production mode
-$ npm run start:prod
-```
+- Node.js (v18+)
+- Docker and Docker Compose
+- PostgreSQL database (or NeonDB)
 
-## Run tests
+Clone the repository
 
-```bash
-# unit tests
-$ npm run test
+git clone https://github.com/SaiPrabhasKola/finance-backend.git
 
-# e2e tests
-$ npm run test:e2e
+cd finance-backend
 
-# test coverage
-$ npm run test:cov
-```
+Configure environment variables
 
-## Deployment
+Create a .env file:
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+DATABASE_URL=your_database_url
+JWT_PRIVATE_KEY=your_private_key
+JWT_PUBLIC_KEY=your_public_key
+PORT=3000
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Install dependencies
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+npm install
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Run migrations
 
-## Resources
+npx prisma migrate deploy
 
-Check out a few resources that may come in handy when working with NestJS:
+Start the application
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+npm run start:dev
 
-## Support
+Running with Docker
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Build and start:
 
-## Stay in touch
+docker-compose up -d --build
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Stop services:
 
-## License
+docker-compose down
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+API Documentation
+
+Swagger UI is available at:
+
+http://54.252.149.171/:3000/api
+
+Deployment
+
+The application is deployed on AWS EC2 using Docker.
+
+- Multi-stage Docker build for optimized image size
+- Environment variables managed via .env
+- External PostgreSQL (NeonDB) used instead of local container
+- Public access via EC2 instance IP
+
+Key Technical Decisions
+
+- NestJS chosen for modular architecture and scalability
+- Prisma used for type-safe database access and migrations
+- RSA-based JWT used for improved security over symmetric keys
+- Multi-stage Docker build separates build and runtime environments
+- Prisma config-based setup required explicit handling in Docker
+- NeonDB used to reduce infrastructure overhead
+
+Known Limitations
+
+- No refresh token mechanism
+- No rate limiting or request throttling
+- No centralized logging or monitoring
+- HTTPS and reverse proxy not configured
+
+Future Improvements
+
+- Add CI/CD pipeline for automated deployment
+- Integrate NGINX with HTTPS
+- Implement refresh tokens and session management
+- Add rate limiting and request logging
+- Introduce monitoring and alerting
