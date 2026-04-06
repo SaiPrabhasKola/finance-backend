@@ -6,8 +6,10 @@ import { Role } from 'src/common/enums/common.enum';
 import { Roles } from 'src/common/decorators/roles.decorators';
 import { CreateRecordDto } from './dtos/create-record.dto';
 import { UpdateRecordDTO } from './dtos/update-record.dto';
+import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('records')
+    @ApiBearerAuth('access-token')
 export class RecordsController {
     constructor(private readonly recordService: RecordsService) { }
 

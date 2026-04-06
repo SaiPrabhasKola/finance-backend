@@ -9,8 +9,14 @@ async function bootstrap() {
     .setTitle('Finance API')
     .setDescription('Finance backend APIs')
     .setVersion('1.0')
-    .addBearerAuth()
-    .build();
+    .addBearerAuth(
+      {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+      'access-token',
+    ).build();
 
   const document = SwaggerModule.createDocument(app, config, {
     ignoreGlobalPrefix: true,

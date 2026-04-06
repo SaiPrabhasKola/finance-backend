@@ -6,9 +6,10 @@ import { JwtAuthGuard } from './auth.guard';
 import { RolesGuard } from 'src/common/guards/roles.guards';
 import { Roles } from 'src/common/decorators/roles.decorators';
 import { Role } from 'src/common/enums/common.enum';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('auth')
+  @ApiBearerAuth('access-token')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
